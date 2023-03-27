@@ -3,7 +3,7 @@ import React from "react";
 export default function Home(props) {
   return (
     <>
-      <div className="card text-center">
+      <div className="card text-center" style={{backgroundColor: "#efebe9"}}>
         <div className="card-header">Welcome</div>
         <div className="card-body">
           <h5 className="card-title">
@@ -14,7 +14,7 @@ export default function Home(props) {
             content.
           </p>
           <a href="/" className="btn btn-primary">
-            Go somewhere
+            Let's get Started!
           </a>
         </div>
         <div className="card-footer text-muted">

@@ -10,7 +10,8 @@ import Login from "./Components/Login";
 
 function App() {
   let auth = true;
-
+  // changing background image to the whole page
+  document.body.style.backgroundImage = "url('https://i.pinimg.com/564x/8a/d3/48/8ad3484dd510ba8962a256b922c76aa9.jpg')";
   return (
     <>
       <Router>

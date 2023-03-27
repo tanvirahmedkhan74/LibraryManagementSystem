@@ -45,6 +45,8 @@ function Login({ onLogin }) {
         </div>
         <br />
         <button type="submit" className="btn btn-primary">Login</button>
+
+        <button type="submit" className="btn btn-primary mx-3">Create new Account</button>
       </form>
     </div>
   );
