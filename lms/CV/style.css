@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'inter', sans-serif;
+}
+
+a{
+    text-decoration: none;
+    color: #fff;
+}
+body{
+    background: #030c21;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container{
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    min-height: 800px;
+    margin: 50px;
+    background: #fff;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5);
+}
+
+.profile_text{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 22px;
+    border-bottom: 1px solid;
+}
+
+.profile_text .profile_img{
+    font-size: 30px;
+    font-weight: 200;
+    height: 200px;
+    width: 200px;
+    color: #3255a1;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+/* .profile_text .profile_img img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+} */
+
+.profile_text h3{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #c8ccd7;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 1.4rem;
+}
+
+.profile_text h3 span{
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #c8ccd7;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 1.4rem;
+}
+
+.contact_info{
+    padding-top: 40px;  
+}
+
+.title{
+    color: #c8ccd7;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.contact_info ul{
+    position: relative;
+}
+
+.contact_info ul li{
+    list-style: none;
+    position: relative;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.contact_info ul li .icon{
+    display: inline-block;
+    width: 30px;
+    font-size: 18px;
+    color: rgb(225, 237, 184);
+}
+
+.contact_info ul li span{
+    font-weight: 300;
+    color: #c8ccd7;
+}
+
+/*Education*/
+.contact_info.education li{
+    margin-bottom: 12px;
+}
+
+.contact_info.education h5{
+    color: #87a5f1;
+    font-weight: 500;
+}
+
+.contact_info.education h4{
+    color: #9ca0ab;
+    font-weight: 300;
+    margin-top: 5px;
+}
+
+.contact_info.education h4:nth-child(2){
+    color: #ccced1;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+/*Language*/
+.contact_info.language .percent{
+    margin-top: 8px;
+    position: relative;
+    width: 100%;
+    height: 5px;
+    display: block;
+    background: #17120e;
+}
+
+
+.contact_info.language .percent div{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #a4baef;
+}
+
+
+
+
+.container .left_bar{
+    position: relative;
+    background: #1f3157;
+    padding: 40px;
+}
+
+/*Right Bar profile start*/
+.about{
+    margin-bottom: 50px;
+}
+
+.about:last-child{
+    margin-bottom: 0;
+}
+
+.title2{
+    color: #7895e4;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+p{
+    color : #152121;
+    font-weight: 300;
+}
+
+.about .box{
+    display: flex;
+    flex-direction: row;
+    margin: 20px 0;
+}
+
+.about .box .year_company{
+    min-width: 150px;
+    color: #2a2b30;
+}
+
+.about .box .year_company h5{
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #4c5160;
+}
+
+.about .box .text h4{
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #373941;
+}
+
+.skills .box{
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    justify-content: center;
+    align-items: center;
+}
+
+.skills .box h4{
+    text-transform: uppercase;
+    color: #152121;
+    font-weight: 500;
+}
+
+.skills .box .percent{
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background: rgb(190, 176, 241);
+}
+
+.skills .box .percent div{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #23183e;
+}
+
+.container .right_bar{
+    position: relative;
+    background: #e9ebee;
+    padding: 40px;
+
+}
+
+@media(max-width: 800px){
+    .container{
+        margin: 10px;
+        grid-template-columns: 1fr;
+    }
+}
