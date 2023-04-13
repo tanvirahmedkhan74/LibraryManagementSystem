@@ -1,7 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const mysql = require('mysql');
 
-
+const db = mysql.createConnection({
+    user: 'root',
+    host: 'localhost',
+    password: '2600',
+    database: 'login_system',
+});
 
 router.post('/register', (req, res) => {
     const uname = req.body.uname;
@@ -22,6 +28,7 @@ router.post('/login', (req, res) => {
 
         if(result.length > 0){
             res.send(result);
+            console.log("Logged in");
         }else{
             res.send({message: "Wrong username/password combination"});
         }

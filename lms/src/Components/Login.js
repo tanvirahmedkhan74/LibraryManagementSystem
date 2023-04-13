@@ -1,34 +1,40 @@
-import { useState } from 'react';
+import * as React from "react";
+import Axios from "axios";
 
-function Login({ onLogin }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+export default function Registration() {
+  const [logEmail, setLogEmail] = React.useState("");
+  const [logPassword, setLogPassword] = React.useState("");
 
-  function handleLogin(event) {
-    event.preventDefault();
+  // Login States
+  const handleLogEmailChange = (event) => {
+    setLogEmail(event.target.value);
+  };
 
-    // replace with your authentication logic
-    if (email === 'user@example.com' && password === 'password') {
-      onLogin();
-    } else {
-      setError('Invalid email or password');
-    }
-  }
+  const handleLogPasswordChange = (event) => {
+    setLogPassword(event.target.value);
+  };
+
+  const login = () => {
+    Axios.post("http://localhost:3001/auth/login", {
+      email: logEmail,
+      password: logPassword,
+    }).then((response) => {
+      console.log(response);
+    });
+  };
 
   return (
-    <div className="container">
+    <div className="container my-5">
       <h2>Login</h2>
-      {error && <div className="alert alert-danger">{error}</div>}
-      <form onSubmit={handleLogin}>
+      <form>
         <div className="form-floating mb-3">
           <input
             type="email"
             className="form-control"
-            id="floatingInput"
+            id="floatingInputLogin"
             placeholder="name@example.com"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            value={logEmail}
+            onChange={handleLogEmailChange}
           />
           <label htmlFor="floatingInput">Email address</label>
         </div>
@@ -36,20 +42,18 @@ function Login({ onLogin }) {
           <input
             type="password"
             className="form-control"
-            id="floatingPassword"
+            id="floatingPasswordLogin"
             placeholder="Password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            value={logPassword}
+            onChange={handleLogPasswordChange}
           />
           <label htmlFor="floatingPassword">Password</label>
         </div>
         <br />
-        <button type="submit" className="btn btn-primary">Login</button>
-
-        <button type="submit" className="btn btn-primary mx-3">Create new Account</button>
+        <button type="submit" className="btn btn-primary" onClick={login}>
+          Login
+        </button>
       </form>
     </div>
   );
 }
-
-export default Login;
