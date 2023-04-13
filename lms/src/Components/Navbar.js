@@ -62,7 +62,7 @@ export default function Navbar() {
                 </ul>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/login">Login/Sign Up</Link>
+                <Link className="nav-link" to="/auth">Login/Sign Up</Link>
               </li>
             </ul>
             <form className="d-flex" role="search">
