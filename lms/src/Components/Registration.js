@@ -8,6 +8,7 @@ import KeyIcon from "@mui/icons-material/Key";
 import EmailIcon from "@mui/icons-material/Email";
 import Axios from "axios";
 
+
 export default function Registration() {
   const [name, setName] = React.useState("");
   const [regEmail, setRegEmail] = React.useState("");
@@ -139,3 +140,5 @@ export default function Registration() {
     </div>
   );
 }
+
+

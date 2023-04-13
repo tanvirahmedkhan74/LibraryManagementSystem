@@ -7,6 +7,7 @@ import ReactDOM from "react-dom/client";
 import { Redirect } from "react-router-dom";
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Login from "./Components/Login";
+import Registration from "./Components/Registration";
 
 function App() {
   let auth = true;
@@ -25,11 +26,11 @@ function App() {
             ) : (
               <Route
                 exact
-                path="/login"
-                element={<Login/>}
+                path="/auth"
+                element={<Registration/>}
               />
             )}
-            <Route path="/login" element={<Login />} />
+            <Route path="/auth" element={<Registration/>} />
           </Routes>
         </div>
       </Router>
