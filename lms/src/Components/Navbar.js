@@ -1,18 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
-export default function Navbar() {
+import Sidebar from "./RightSidebar";
+import RightSidebar from "./RightSidebar";
+import LeftSideBar from "./LeftSideBar";
+export default function Navbar(props) {
   return (
+    <>
       <nav className="navbar navbar-expand-lg sticky-top bg-body-tertiary">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             LMS
           </Link>
           <button
-            className="navbar-toggler"
+            class="btn btn-white"
             type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasWithBothOptions"
+            aria-controls="offcanvasWithBothOptions"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
@@ -61,9 +65,6 @@ export default function Navbar() {
                   </li>
                 </ul>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/auth">Manage Your Account</Link>
-              </li>
             </ul>
             <form className="d-flex" role="search">
               <input
@@ -72,12 +73,24 @@ export default function Navbar() {
                 placeholder="Search"
                 aria-label="Search"
               />
-              <button className="btn btn-outline-success" type="submit">
+              <button className="btn btn-outline-success mx-4" type="submit">
                 Search
               </button>
             </form>
+            <button
+              className="btn btn-outline-success"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasRight"
+              aria-controls="offcanvasRight"
+            >
+              Account
+            </button>
           </div>
         </div>
       </nav>
+      <RightSidebar />
+      <LeftSideBar />
+    </>
   );
 }

@@ -10,12 +10,14 @@ import Auth from "./Components/Auth";
 
 function App() {
   let auth = true;
+  let logged = "Tanvir";
+
   // changing background image to the whole page
   document.body.style.backgroundImage = "url('https://th.bing.com/th/id/R.c6fee5c1e2d761ad6279332084152455?rik=L9bOo7%2fq8V4yig&pid=ImgRaw&r=0')";
   return (
     <>
       <Router>
-        <Navbar />
+        <Navbar logged={logged} auth={auth}/>
         <div className="container">
           <Routes>
             <Route exact path="/" element={<Home auth={auth} />} />
@@ -25,7 +27,7 @@ function App() {
             ) : (
               <Route
                 exact
-                path="/login"
+                path="/auth"
                 element={<Auth/>}
               />
             )}

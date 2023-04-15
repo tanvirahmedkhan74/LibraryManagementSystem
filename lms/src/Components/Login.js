@@ -1,7 +1,7 @@
 import * as React from "react";
 import Axios from "axios";
 
-export default function Registration() {
+export default function Login() {
   const [logEmail, setLogEmail] = React.useState("");
   const [logPassword, setLogPassword] = React.useState("");
 
