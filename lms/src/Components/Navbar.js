@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Sidebar from "./RightSidebar";
 import RightSidebar from "./RightSidebar";
 import LeftSideBar from "./LeftSideBar";
+import AdminRightSideBar from "./AdminRightSideBar";
 export default function Navbar(props) {
   return (
     <>
@@ -12,7 +12,7 @@ export default function Navbar(props) {
             LMS
           </Link>
           <button
-            class="btn btn-white"
+            className="btn btn-white"
             type="button"
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasWithBothOptions"
@@ -89,7 +89,7 @@ export default function Navbar(props) {
           </div>
         </div>
       </nav>
-      <RightSidebar />
+      {props.logged === "Admin" ? <AdminRightSideBar/> : <RightSidebar logged={props.logged} auth={props.auth}/>}
       <LeftSideBar />
     </>
   );

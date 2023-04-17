@@ -1,12 +1,20 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import Profile from "./Profile";
 
-export default function () {
+export default function RightSidebar (props) {
+
+  const handleProfile = () => {
+    return (
+      <Profile />
+    )
+  };
   return (
     <>
-      <div className="container"> 
+      <div className="container">
         <div
           className="offcanvas offcanvas-end"
-          tabindex="-1"
+          tabIndex="-1"
           id="offcanvasRight"
           aria-labelledby="offcanvasRightLabel"
         >
@@ -21,7 +29,61 @@ export default function () {
               aria-label="Close"
             ></button>
           </div>
-          <div className="offcanvas-body" style={{width: "50%"}}>...</div>
+          <div className="offcanvas-body">
+            {/* Authentication Based Sidebar View*/}
+            {props.auth === false ? (
+              <Link className="nav-link active" aria-current="page" to="/auth">
+                <button className="btn btn-outline-success my-2" type="button">
+                  Login
+                </button>
+              </Link>
+            ) : (
+              <>
+                <div className="container">
+                <p className="font-monospace">Welcome {props.logged}</p>
+                  <Link
+                    className="nav-link active"
+                    aria-current="page"
+                    to="/profile"
+                  >
+                    <button
+                      className="btn btn-outline-success my-2"
+                      type="button"
+                      onClick={handleProfile}
+                    >
+                      Profile
+                    </button>
+                  </Link>
+
+                  <Link
+                    className="nav-link active"
+                    aria-current="page"
+                    to="/auth"
+                  >
+                    <button
+                      className="btn btn-outline-success my-2"
+                      type="button"
+                    >
+                      Your Books
+                    </button>
+                  </Link>
+
+                  <Link
+                    className="nav-link active"
+                    aria-current="page"
+                    to="/auth"
+                  >
+                    <button
+                      className="btn btn-outline-success my-2"
+                      type="button"
+                    >
+                      Due Dates
+                    </button>
+                  </Link>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </>
