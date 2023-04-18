@@ -18,6 +18,7 @@ export default function Registration() {
     setRegPassword(event.target.value);
   };
 
+  //Axios.defaults.withCredentials = true;
   const register = () => {
     Axios.post("http://localhost:3001/auth/register", {
       uname: name,

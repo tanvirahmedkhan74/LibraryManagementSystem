@@ -10,6 +10,7 @@ export default function AdminRightSideBar() {
               tabIndex="-1"
               id="offcanvasRight"
               aria-labelledby="offcanvasRightLabel"
+              style={{ backgroundColor: "#f8f9fa" , width: "275px" }}
             >
               <div className="offcanvas-header">
                 <h5 className="offcanvas-title" id="offcanvasRightLabel">

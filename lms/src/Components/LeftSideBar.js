@@ -11,6 +11,7 @@ export default function LeftSideBar () {
           tabIndex="-1"
           id="offcanvasWithBothOptions"
           aria-labelledby="offcanvasWithBothOptionsLabel"
+          style={{ backgroundColor: "#f8f9fa" , width: "275px" }}
         >
           <div className="offcanvas-header">
             <h5 className="offcanvas-title" id="offcanvasWithBothOptionsLabel">

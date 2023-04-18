@@ -1,4 +1,5 @@
 import React from "react";
+import Axios from "axios";
 
 export default function Home(props) {
   return (
@@ -18,7 +19,7 @@ export default function Home(props) {
           </a>
         </div>
         <div className="card-footer text-muted">
-          {props.auth === true ? "" : "Please Log in to your Account!"}
+          {/* {props.auth === true ? "" : "Please Log in to your Account!"} */}
         </div>
       </div>
     </>

@@ -1,11 +1,13 @@
 import * as React from "react";
 import Axios from "axios";
+import { redirect } from "react-router-dom";
 
 export default function Login(props) {
   const [logEmail, setLogEmail] = React.useState("");
   const [logPassword, setLogPassword] = React.useState("");
 
-  const [loginStatus , setLoginStatus] = React.useState("X");
+  const [loginStatus , setLoginStatus] = React.useState(false);
+
   // Login States
   const handleLogEmailChange = (event) => {
     setLogEmail(event.target.value);
@@ -15,6 +17,8 @@ export default function Login(props) {
     setLogPassword(event.target.value);
   };
 
+  Axios.defaults.withCredentials = true;
+
   const login = (event) => {
     // Preventing the default behaviour of the form
     event.preventDefault();
@@ -23,20 +27,45 @@ export default function Login(props) {
       email: logEmail,
       password: logPassword,
     }).then((response) => {
-      console.log(response);
-      if(response.data.message){
-        setLoginStatus(response.data.message);
+      //console.log(response);
+      if(!response.data.auth){
+        setLoginStatus(false);
       }else{
-        props.handleAuth();
-        props.handleLogged(response.data[0].Username);
-        setLoginStatus(response.data[0].Username);
+        setLoginStatus(true);
+        //console.log(response);
+        localStorage.setItem("token" , response.data.token);
+        console.log(response.data.result[0].Username);
+        setTimeout(() => {
+          return redirect("/");
+        }, 2000);
+        window.location.reload(false);
       }
     });
   };
 
+  // const userAuthenticated = () => {
+  //   Axios.get("http://localhost:3001/auth/isUserAuth", {
+  //     headers: {
+  //       "x-access-token": localStorage.getItem("token"),
+  //     },
+  //   }).then((response) => {
+  //     console.log(response);
+  //   });
+  // };
+  
+
+  React.useEffect(() => {
+    Axios.get("http://localhost:3001/auth/login").then((response) => {
+      console.log(response);
+      if (response.data.auth === true) {
+        setLoginStatus(true);
+      }
+    });
+  }, []);
+
   return (
     <div className="container my-5">
-      <h3>{loginStatus}</h3>
+      <h3>{loginStatus ? "IN" : "Nope"}</h3>
       <h2>Login</h2>
       
       <form>

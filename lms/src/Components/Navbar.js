@@ -3,7 +3,27 @@ import { Link } from "react-router-dom";
 import RightSidebar from "./RightSidebar";
 import LeftSideBar from "./LeftSideBar";
 import AdminRightSideBar from "./AdminRightSideBar";
+import Axios from "axios";
+
 export default function Navbar(props) {
+  const [admin, setAdmin] = React.useState(false);
+  const [user, setUser] = React.useState(false);
+
+  Axios.defaults.withCredentials = true;
+  
+  React.useEffect(() => {
+    Axios.get("http://localhost:3001/auth/login").then((response) => {
+      console.log(response);
+      if (response.data.loggedIn === true) {
+        if (response.data.user[0].Admin){
+          setAdmin(true);
+        }else{
+          setUser(true);
+        }
+      }
+    });
+  }, []);
+
   return (
     <>
       <nav className="navbar navbar-expand-lg sticky-top bg-body-tertiary">
@@ -89,7 +109,8 @@ export default function Navbar(props) {
           </div>
         </div>
       </nav>
-      {props.logged === "Admin" ? <AdminRightSideBar/> : <RightSidebar logged={props.logged} auth={props.auth}/>}
+
+      {admin ? <AdminRightSideBar/> : <RightSidebar/>}
       <LeftSideBar />
     </>
   );

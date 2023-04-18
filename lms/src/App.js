@@ -5,13 +5,30 @@ import Home from "./Components/Home";
 import ELibrary from "./Components/ELibrary";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Auth from "./Components/Auth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Profile from "./Components/Profile";
+import Login from "./Components/Login";
+import Axios from "axios";
 
 function App() {
+  Axios.defaults.withCredentials = true;
+
   const [auth, setAuth] = useState(false);
-  console.log(auth);
-  const [logged, setLogged] = useState("");
+  const [admin, setAdmin] = useState(false);
+  const [user, setUser] = useState(false);
+
+  useEffect(() => {
+    Axios.get("http://localhost:3001/auth/login").then((response) => {
+      console.log(response);
+      if (response.data.loggedIn === true) {
+        if (response.data.user[0].Admin) {
+          setAdmin(true);
+        } else {
+          setUser(true);
+        }
+      }
+    });
+  }, []);
 
   // changing background image to the whole page
   document.body.style.backgroundImage =
@@ -19,14 +36,15 @@ function App() {
   return (
     <>
       <Router>
-        <Navbar logged={logged} auth={auth} />
+        <Navbar/>
         <div className="container">
           <Routes>
-            <Route exact path="/" element={<Home auth={auth} />} />
-            <Route exact path="/about" element={<About />} />
-            <Route exact path="/elibrary" element={<ELibrary auth={auth}/>} />
-            <Route path="/auth" element={<Auth auth={auth} logged={logged} setAuth = {setAuth} setLogged={setLogged}/>} />
-            <Route path="/profile" element={<Profile auth={auth} logged={logged}/>} />
+            <Route exact path="/" element={<Home/>} />
+            <Route exact path="/about" element={<About/>} />
+            <Route exact path="/elibrary" element={<ELibrary/>} />
+            <Route path="/auth" element={<Auth/>} />
+            <Route path="/profile" element={<Profile/>} />
+            <Route path="/auth/login" element={<Login/>} />
           </Routes>
         </div>
       </Router>
