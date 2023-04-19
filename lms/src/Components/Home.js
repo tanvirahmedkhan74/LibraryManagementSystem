@@ -2,6 +2,21 @@ import React from "react";
 import Axios from "axios";
 
 export default function Home(props) {
+  Axios.defaults.withCredentials = true;
+  const [auth, setAuth] = React.useState(false);
+  const [admin, setAdmin] = React.useState(false);
+
+  React.useEffect(() => {
+    Axios.get("http://localhost:3001/auth/login").then((response) => {
+      console.log(response);
+      if (response.data.loggedIn === true) {
+        setAuth(true);
+        if (response.data.user[0].Admin){
+          setAdmin(true);
+        }
+      }
+    });
+  }, []);
   return (
     <>
       <div className="card text-center" style={{backgroundColor: "#efebe9"}}>

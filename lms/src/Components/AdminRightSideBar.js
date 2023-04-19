@@ -1,7 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import Axios from 'axios';
 
 export default function AdminRightSideBar() {
+
+  Axios.defaults.withCredentials = true;
+  
+  const handleLogout = () => {
+    Axios.get("http://localhost:3001/auth/logout").then((response) => {
+      //console.log(response);
+      window.location.reload(false);
+    });
+  };
+
     return (
         <>
           <div className="container">
@@ -39,6 +50,10 @@ export default function AdminRightSideBar() {
                    Manage Request
                   </button>
                 </Link>
+
+                <button className="btn btn-outline-success my-2" type="button" onClick={handleLogout}>
+                  Logout
+                </button>
               </div>
             </div>
           </div>

@@ -14,6 +14,15 @@ export default function RightSidebar(props) {
 
   Axios.defaults.withCredentials = true;
 
+  const handleLogout = () => {
+    Axios.get("http://localhost:3001/auth/logout").then((response) => {
+      //console.log(response);
+      setUser(false);
+      setAdmin(false);
+      window.location.reload(false);
+    });
+  };
+
   React.useEffect(() => {
     Axios.get("http://localhost:3001/auth/login").then((response) => {
       console.log(response);
@@ -23,6 +32,7 @@ export default function RightSidebar(props) {
           setAdmin(true);
         }else{
           setUser(true);
+          setLogged(response.data.user[0].Username);
         }
       }
     });
@@ -100,6 +110,10 @@ export default function RightSidebar(props) {
                     Due Dates
                   </button>
                 </Link>
+
+                <button className="btn btn-outline-success my-2" type="button" onClick={handleLogout}>
+                  Logout
+                </button>
               </div>
             )}
           </div>

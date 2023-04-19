@@ -17,6 +17,7 @@ export default function Login(props) {
     setLogPassword(event.target.value);
   };
 
+  // VVVV IMPORTANT VVVV
   Axios.defaults.withCredentials = true;
 
   const login = (event) => {
@@ -36,9 +37,9 @@ export default function Login(props) {
         localStorage.setItem("token" , response.data.token);
         console.log(response.data.result[0].Username);
         setTimeout(() => {
-          return redirect("/");
+          window.location.reload(false);
         }, 2000);
-        window.location.reload(false);
+        
       }
     });
   };
@@ -57,7 +58,7 @@ export default function Login(props) {
   React.useEffect(() => {
     Axios.get("http://localhost:3001/auth/login").then((response) => {
       console.log(response);
-      if (response.data.auth === true) {
+      if (response.data.loggedIn === true) {
         setLoginStatus(true);
       }
     });
