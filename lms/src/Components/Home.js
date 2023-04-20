@@ -1,5 +1,6 @@
 import React from "react";
 import Axios from "axios";
+import BooksList from "./BookList";
 
 export default function Home(props) {
   Axios.defaults.withCredentials = true;
@@ -37,6 +38,7 @@ export default function Home(props) {
           {/* {props.auth === true ? "" : "Please Log in to your Account!"} */}
         </div>
       </div>
+      <BooksList/>
     </>
   );
 }
