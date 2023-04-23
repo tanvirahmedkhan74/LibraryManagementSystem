@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
+import ManageBook from './Admin/ManageBook';
 
 export default function AdminRightSideBar() {
 
@@ -35,7 +36,7 @@ export default function AdminRightSideBar() {
                 ></button>
               </div>
               <div className="offcanvas-body">
-                <Link className="nav-link active" aria-current="page" to="/auth">
+                <Link className="nav-link active" aria-current="page" to="/admin/manageBook">
                   <button className="btn btn-outline-success my-2" type="button">
                    Manage Books
                   </button>

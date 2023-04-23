@@ -9,7 +9,7 @@ export default function Auth(props) {
 
   React.useEffect(() => {
     Axios.get("http://localhost:3001/auth/login").then((response) => {
-      console.log(response);
+      //console.log(response);
       if (response.data.loggedIn === true) {
         if (response.data.user[0].Admin){
           setAdmin(true);

@@ -2,12 +2,14 @@ import "./App.css";
 import Navbar from "./Components/Navbar";
 import About from "./Components/About";
 import Home from "./Components/Home";
-import ELibrary from "./Components/ELibrary";
+import ELibrary from "./Components/Book/ELibrary";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Auth from "./Components/Auth";
 import { useState, useEffect } from "react";
 import Profile from "./Components/Profile";
 import Login from "./Components/Login";
+import ManageBook from "./Components/Admin/ManageBook";
+import EditBook from "./Components/Admin/EditBook";
 import Axios from "axios";
 
 function App() {
@@ -19,7 +21,7 @@ function App() {
 
   useEffect(() => {
     Axios.get("http://localhost:3001/auth/login").then((response) => {
-      console.log(response);
+      //console.log(response);
       if (response.data.loggedIn === true) {
         if (response.data.user[0].Admin) {
           setAdmin(true);
@@ -45,6 +47,10 @@ function App() {
             <Route path="/auth" element={<Auth/>} />
             <Route path="/profile" element={<Profile/>} />
             <Route path="/auth/login" element={<Login/>} />
+            <Route path="/admin/manageBook" element={<ManageBook/>} />
+
+            <Route path="/admin/editBook/:BookID" element={<EditBook/>} />
+            
           </Routes>
         </div>
       </Router>

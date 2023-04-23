@@ -1,6 +1,6 @@
 import React from "react";
 import Axios from "axios";
-import BooksList from "./BookList";
+import BooksList from "./Book/BookList";
 
 export default function Home(props) {
   Axios.defaults.withCredentials = true;
@@ -20,6 +20,7 @@ export default function Home(props) {
   }, []);
   return (
     <>
+    <hr className="border border-primary border-3 opacity-75"/>
       <div className="card text-center" style={{backgroundColor: "#efebe9"}}>
         <div className="card-header">Welcome</div>
         <div className="card-body">
@@ -38,6 +39,7 @@ export default function Home(props) {
           {/* {props.auth === true ? "" : "Please Log in to your Account!"} */}
         </div>
       </div>
+      <hr className="border border-primary border-3 opacity-75"></hr>
       <BooksList/>
     </>
   );
