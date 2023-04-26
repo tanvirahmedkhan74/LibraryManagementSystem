@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import EditBook from "./EditBook";
 import "./ManageBook.css";
+import AddBook from "./AddBook";
 
 export default function ManageBook() {
   const [books, setBooks] = useState([]);
@@ -24,9 +25,11 @@ export default function ManageBook() {
       });
   }, []);
 
-  const handleEdit = (book) => {
-    return <EditBook book={book} />;
-  };
+  // const imageUrl = `http://localhost:3001/uploads/${book.CoverImage}`;
+
+  // const handleEdit = (book) => {
+  //   return <EditBook book={book} />;
+  // };
 
   const handleDelete = (book) => {
     axios
@@ -42,6 +45,11 @@ export default function ManageBook() {
   return (
     <div>
       <h3>Books</h3>
+      <Link to={"/admin/addBook"}>
+        <button className="btn btn-outline-success my-2" type="button" style={{padding :"2px"}}>
+          Add Book
+        </button>
+      </Link>
       <table className="book-table">
         <thead>
           <tr>
@@ -74,7 +82,7 @@ export default function ManageBook() {
                     Edit
                   </button>
                 </Link>
-  
+
                 <Link
                   className="nav-link active"
                   aria-current="page"
@@ -93,5 +101,5 @@ export default function ManageBook() {
         </tbody>
       </table>
     </div>
-  );  
+  );
 }

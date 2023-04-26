@@ -5,6 +5,7 @@ const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
 
+// Multer config
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, "./Assets/Images");
@@ -15,12 +16,16 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+// Database config
+
 const db = mysql.createConnection({
   user: "root",
   host: "localhost",
   password: "2600",
   database: "elibrary",
 });
+
+// CORS config
 
 router.use(
   cors({
@@ -29,6 +34,8 @@ router.use(
     credentials: true,
   })
 );
+
+// Book routes
 
 router.get("/getBooks", (req, res) => {
   db.query("SELECT * FROM Book", (err, result) => {
@@ -51,10 +58,10 @@ router.put("/updateBook", upload.single("image"), (req, res) => {
   const edition = req.body.edition;
   const category = req.body.category;
   const copies = req.body.copies;
-  const cover = req.file.path; // Use req.file instead of req.body.cover
+  const cover = req.file.filename; // Use req.file instead of req.body.cover
   const BookID = req.body.BookID;
 
-  console.log(cover);
+  //console.log(cover);
 
   db.query(
       "UPDATE Book SET Title = ?, Publisher = ?, ISBN = ?, PublicationDate = ?, Edition = ?, Category = ?, AvailableCopies = ?, CoverImage = ? WHERE BookID = ?",
@@ -64,7 +71,7 @@ router.put("/updateBook", upload.single("image"), (req, res) => {
               console.log(err);
           } else {
               res.send(result);
-              console.log(result);
+              //console.log(result);
           }
       }
   );
@@ -83,26 +90,29 @@ router.get("/getBook/:id", (req, res) => {
 });
 
 // Title, ISBN, Publisher, NumberOfPages, Edition, AvailableCopy, Cover(optional)
-router.post("/addBook", (req, res) => {
+router.post("/addBook", upload.single('image') ,(req, res) => {
   const title = req.body.title;
-  const isbn = req.body.isbn;
   const publisher = req.body.publisher;
-  const numberOfPages = req.body.numberOfPages;
+  const isbn = req.body.isbn;
+  const publicationDate = req.body.publicationDate;
   const edition = req.body.edition;
-  const availableCopy = req.body.availableCopy;
-  const cover = req.body.cover;
+  const category = req.body.category;
+  const copies = req.body.copies;
+  const cover = req.file.filename; // Use req.file instead of req.body.cover
+  const BookID = req.body.BookID;
 
   db.query(
-    "INSERT INTO Book (Title, ISBN, Publisher, NumberOfPages, Edition, AvailableCopies, Cover) VALUES (?, ?, ?, ?, ?, ?, ?)",
-    [title, isbn, publisher, numberOfPages, edition, availableCopy, cover],
+    "INSERT INTO Book (Title, Publisher, ISBN, PublicationDate, Edition, Category, AvailableCopies, CoverImage) VALUES (?,?,?,?,?,?,?,?)",
+    [title, publisher, isbn, publicationDate, edition, category, copies, cover],
     (err, result) => {
       if (err) {
         console.log(err);
       } else {
-        res.send("Values Inserted");
+        res.send(result);
+        console.log(result);
       }
     }
-  );
+  )
 });
 
 module.exports = router;

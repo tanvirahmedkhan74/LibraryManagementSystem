@@ -11,6 +11,8 @@ const bookRouter = require('./routes/Book');
 app.use('/auth', authRouter);
 app.use('/book', bookRouter);
 
+app.use("/uploads", express.static("Assets/Images"))
+
 // const db = mysql.createConnection({
 //     user: 'root',
 //     host: 'localhost',

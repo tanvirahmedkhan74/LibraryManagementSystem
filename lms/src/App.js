@@ -10,6 +10,7 @@ import Profile from "./Components/Profile";
 import Login from "./Components/Login";
 import ManageBook from "./Components/Admin/ManageBook";
 import EditBook from "./Components/Admin/EditBook";
+import AddBook from "./Components/Admin/AddBook";
 import Axios from "axios";
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
             <Route path="/admin/manageBook" element={<ManageBook/>} />
 
             <Route path="/admin/editBook/:BookID" element={<EditBook/>} />
+            <Route path="/admin/addBook" element={<AddBook/>} />
             
           </Routes>
         </div>
