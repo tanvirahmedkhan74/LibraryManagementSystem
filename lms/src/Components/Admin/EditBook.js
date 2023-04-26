@@ -12,11 +12,7 @@ export default function EditBook() {
   const [title, setTitle] = React.useState("");
   const [publisher, setPublisher] = React.useState("");
   const [isbn, setIsbn] = React.useState("");
-  // Formatting Date into YYYY-MM-DD
-  
-  //console.log(dateObj);
-  // const formattedDate = dateObj.toISOString().slice(0, 10);
-  // console.log(formattedDate);
+
   const [publicationDate, setPublicationDate] = React.useState("");
   const [edition, setEdition] = React.useState("");
   const [category, setCategory] = React.useState("");
@@ -25,10 +21,10 @@ export default function EditBook() {
   const [cover, setCover] = React.useState("");
 
   // axios call to get book details from "/getBook/:id"
-  //console.log(book);
+
   useEffect(() => {
     axios.get(`http://localhost:3001/book/getBook/${BookID}`).then((res) => {
-      //console.log(res.data[0]);
+      console.log(res);
       setBook(res.data[0]);
       setTitle(res.data[0].Title);
       setPublisher(res.data[0].Publisher);
@@ -39,6 +35,7 @@ export default function EditBook() {
       setEdition(res.data[0].Edition);
       setCategory(res.data[0].Category);
       setCopies(res.data[0].AvailableCopies);
+      setCover(res.data[0].CoverImage);
     });
   }, []);
 
@@ -48,10 +45,44 @@ export default function EditBook() {
     setCover(event.target.files[0]);
   };
 
+  // Update to /updateBook with title, publisher, isbn, publicationDate, edition, category, copies, cover, id
   const handleUpdate = (event) => {
-    event.preventDefault();
-    console.log(title, publisher, isbn, publicationDate, edition, category, copies, cover);
+    if (copies < 0) {
+      alert("Available Copies cannot be less than 0");
+      return;
+    } else if (edition < 0) {
+      alert("Edition cannot be less than 0");
+      return;
+    } else {
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("publisher", publisher);
+      formData.append("isbn", isbn);
+      formData.append("publicationDate", publicationDate);
+      formData.append("edition", edition);
+      formData.append("category", category);
+      formData.append("copies", copies);
+      formData.append("BookID", BookID);
+      if (cover) {
+        formData.append("image", cover);
+      }
+  
+      axios
+        .put("http://localhost:3001/book/updateBook", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          alert("Book Updated");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
+  
 
   return (
     <>
@@ -162,6 +193,10 @@ export default function EditBook() {
           <input
             type="file"
             className="form-control"
+            name="image"
+            onChange = {(event) => {
+              setCover(event.target.files[0]);
+            }}
             id="inputGroupFile04"
             aria-describedby="inputGroupFileAddon04"
             aria-label="Upload"
