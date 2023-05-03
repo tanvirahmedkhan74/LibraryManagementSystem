@@ -35,7 +35,7 @@ export default function ManageBook() {
     axios
       .delete(`http://localhost:3001/book/deleteBook/${book.BookID}`)
       .then(() => {
-        setBooks(books.filter((b) => b.BookID !== book.BookID));
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
@@ -46,7 +46,11 @@ export default function ManageBook() {
     <div>
       <h3>Books</h3>
       <Link to={"/admin/addBook"}>
-        <button className="btn btn-outline-success my-2" type="button" style={{padding :"2px"}}>
+        <button
+          className="btn btn-outline-success my-2"
+          type="button"
+          style={{ padding: "2px" }}
+        >
           Add Book
         </button>
       </Link>
@@ -83,18 +87,61 @@ export default function ManageBook() {
                   </button>
                 </Link>
 
-                <Link
-                  className="nav-link active"
-                  aria-current="page"
-                  to="/admin/manageBook"
+                <button
+                  type="button"
+                  className="btn btn-outline-success my-2"
+                  data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop"
                 >
-                  <button
-                    className="btn btn-outline-success my-2"
-                    type="button"
-                  >
-                    Delete
-                  </button>
-                </Link>
+                  Delete
+                </button>
+                <div
+                  className="modal fade"
+                  id="staticBackdrop"
+                  data-bs-backdrop="static"
+                  data-bs-keyboard="false"
+                  tabindex="-1"
+                  aria-labelledby="staticBackdropLabel"
+                  aria-hidden="true"
+                >
+                  <div className="modal-dialog">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h1
+                          className="modal-title fs-5"
+                          id="staticBackdropLabel"
+                        >
+                          Delete Book
+                        </h1>
+                        <button
+                          type="button"
+                          className="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div className="modal-body">
+                        Are You Sure About Deleting This Book?
+                      </div>
+                      <div className="modal-footer">
+                        <button
+                          type="button"
+                          className="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-primary"
+                          onClick={() => handleDelete(book)}
+                        >
+                          Yes!
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </td>
             </tr>
           ))}
