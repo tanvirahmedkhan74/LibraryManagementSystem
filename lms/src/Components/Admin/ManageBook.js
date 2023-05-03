@@ -7,6 +7,7 @@ import AddBook from "./AddBook";
 
 export default function ManageBook() {
   const [books, setBooks] = useState([]);
+  const [currentBook, setCurrentBook] = useState(null);
 
   useEffect(() => {
     axios
@@ -33,7 +34,7 @@ export default function ManageBook() {
 
   const handleDelete = (book) => {
     axios
-      .delete(`http://localhost:3001/book/deleteBook/${book.BookID}`)
+      .delete(`http://localhost:3001/book/deleteBook/${book}`)
       .then(() => {
         window.location.reload();
       })
@@ -75,7 +76,7 @@ export default function ManageBook() {
               <td>{book.ISBN}</td>
               <td>{book.Publisher}</td>
               <td>{book.PublicationDate}</td>
-              <td>{book.category}</td>
+              <td>{book.Category}</td>
               <td>{book.AvailableCopies}</td>
               <td>
                 <Link to={`/admin/editBook/${book.BookID}`}>
@@ -92,6 +93,7 @@ export default function ManageBook() {
                   className="btn btn-outline-success my-2"
                   data-bs-toggle="modal"
                   data-bs-target="#staticBackdrop"
+                  onClick={() => setCurrentBook(book.BookID)}
                 >
                   Delete
                 </button>
@@ -121,7 +123,7 @@ export default function ManageBook() {
                         ></button>
                       </div>
                       <div className="modal-body">
-                        Are You Sure About Deleting This Book?
+                        Are You Sure About Deleting This Book {currentBook}?
                       </div>
                       <div className="modal-footer">
                         <button
@@ -134,7 +136,7 @@ export default function ManageBook() {
                         <button
                           type="button"
                           className="btn btn-primary"
-                          onClick={() => handleDelete(book)}
+                          onClick={() => handleDelete(currentBook)}
                         >
                           Yes!
                         </button>

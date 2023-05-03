@@ -5,6 +5,7 @@ const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
 const { pid } = require("process");
+const fs = require("fs");
 
 // Multer config
 const storage = multer.diskStorage({
@@ -36,53 +37,6 @@ router.use(
   })
 );
 
-// Book routes
-
-// router.get("/getBooks", (req, res) => {
-//   db.query("SELECT * FROM Book", (err, result) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       //console.log(result);
-//       // Get the Publisher from the publisher table with the PublisherID
-
-//       for (let i = 0; i < result.length; i++) {
-//         db.query(
-//           "SELECT Name FROM Publisher WHERE PublisherID = ?",
-//           result[i].PublisherID,
-//           (err, result2) => {
-//             if (err) {
-//               console.log(err);
-//             } else {
-//               //console.log(result2);
-//               result[i].Publisher = result2[0].Name;
-//             }
-//           }
-//         );
-//       }
-
-//       // Get the Category from the category table with the CategoryID
-
-//       for (let i = 0; i < result.length; i++) {
-//         db.query(
-//           "SELECT Name FROM Category WHERE CategoryID = ?",
-//           result[i].CategoryID,
-//           (err, result2) => {
-//             if (err) {
-//               console.log(err);
-//             } else {
-//               result[i].Category = result2[0].Name;
-//               console.log(result[i].Category);
-//             }
-//           }
-//         );
-//       }
-//       console.log(result);
-//       res.send(result);
-//     }
-//   });
-// });
-
 router.get("/getBooks", (req, res) => {
   db.query("SELECT * FROM Book", (err, result) => {
     if (err) {
@@ -91,7 +45,7 @@ router.get("/getBooks", (req, res) => {
       //console.log(result);
       // Get the Publisher from the publisher table with the PublisherID
 
-      const publisherPromises = result.map(book => {
+      const publisherPromises = result.map((book) => {
         return new Promise((resolve, reject) => {
           db.query(
             "SELECT Name FROM Publisher WHERE PublisherID = ?",
@@ -110,7 +64,7 @@ router.get("/getBooks", (req, res) => {
 
       // Get the Category from the category table with the CategoryID
 
-      const categoryPromises = result.map(book => {
+      const categoryPromises = result.map((book) => {
         return new Promise((resolve, reject) => {
           db.query(
             "SELECT Name FROM Category WHERE CategoryID = ?",
@@ -127,17 +81,18 @@ router.get("/getBooks", (req, res) => {
         });
       });
 
-      Promise.all([...publisherPromises, ...categoryPromises]).then(() => {
-        console.log(result);
-        res.send(result);
-      }).catch((err) => {
-        console.log(err);
-        res.status(500).send("Internal server error");
-      });
+      Promise.all([...publisherPromises, ...categoryPromises])
+        .then(() => {
+          //console.log(result);
+          res.send(result);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(500).send("Internal server error");
+        });
     }
   });
 });
-
 
 // title, publisher, isbn, publicationDate, edition, category, copies, cover, BookID from frontend
 
@@ -266,40 +221,50 @@ router.get("/getBook/:id", (req, res) => {
   db.query("SELECT * FROM Book WHERE BookID = ?", id, (err, result) => {
     if (err) {
       console.log(err);
+      res.status(500).send("Internal server error");
     } else {
-      // Get the Publisher from the publisher table with the PublisherID
-
-      db.query(
-        "SELECT Name FROM Publisher WHERE PublisherID = ?",
-        result[0].Publisher,
-        (err, result2) => {
-          if (err) {
-            console.log(err);
-          } else {
-            result[0].Publisher = result2[0].Name;
+      const publisherPromise = new Promise((resolve, reject) => {
+        db.query(
+          "SELECT Name FROM Publisher WHERE PublisherID = ?",
+          result[0].PublisherID,
+          (err, result2) => {
+            if (err) {
+              reject(err);
+            } else {
+              result[0].Publisher = result2[0].Name;
+              resolve();
+            }
           }
-        }
-      );
+        );
+      });
 
-      // Get the Category from the category table with the CategoryID
-
-      db.query(
-        "SELECT Name FROM Category WHERE CategoryID = ?",
-        result[0].CategoryID,
-        (err, result2) => {
-          if (err) {
-            console.log(err);
-          } else {
-            result[0].Category = result2[0].Name;
+      const categoryPromise = new Promise((resolve, reject) => {
+        db.query(
+          "SELECT Name FROM Category WHERE CategoryID = ?",
+          result[0].CategoryID,
+          (err, result2) => {
+            if (err) {
+              reject(err);
+            } else {
+              result[0].Category = result2[0].Name;
+              resolve();
+            }
           }
-        }
-      );
+        );
+      });
 
-      res.send(result);
-      //console.log(result);
+      Promise.all([publisherPromise, categoryPromise])
+        .then(() => {
+          res.send(result);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(500).send("Internal server error");
+        });
     }
   });
 });
+
 
 // Title, ISBN, Publisher, NumberOfPages, Edition, AvailableCopy, Cover(optional)
 router.post("/addBook", upload.single("image"), (req, res) => {
@@ -419,82 +384,11 @@ router.post("/addBook", upload.single("image"), (req, res) => {
       }
     }
   );
-  // db.query(
-  //   "SELECT PublisherID FROM Publisher WHERE Name = ?",
-  //   publisher,
-  //   (err, result) => {
-  //     if (err) {
-  //       console.log(err);
-  //     } else {
-  //       if (result.length > 0) {
-  //         console.log("Publisher Exist");
-  //         pId = result[0].PublisherID;
-  //       } else {
-  //         console.log(publisher);
-  //         db.query(
-  //           "INSERT INTO Publisher (Name) VALUES (?)",
-  //           publisher,
-  //           (err, result) => {
-  //             if (err) {
-  //               console.log(err);
-  //             } else {
-  //               console.log(result);
-  //               db.query(
-  //                 "SELECT PublisherID FROM Publisher WHERE Name = ?",
-  //                 publisher,
-  //                 (err, result) => {
-  //                   if (err) {
-  //                     console.log(err);
-  //                   } else {
-  //                     console.log(result[0].PublisherID);
-  //                     pId = result[0].PublisherID;
-  //                   }
-  //                 }
-  //               );
-  //             }
-  //           }
-  //         );
-  //       }
-  //     }
-  //   }
-  // );
-
-  // // get the CategoryID from the category table
-  // let categoryId = 0;
-
-  // db.query(
-  //   "SELECT CategoryID FROM Category WHERE Name = ?",
-  //   category,
-  //   (err, result) => {
-  //     if (err) {
-  //       console.log(err);
-  //     } else {
-  //       if (result.length > 0) {
-  //         console.log(result[0].CategoryID);
-  //         categoryId = result[0].CategoryID;
-  //       } else {
-  //         categoryId = 0;
-  //       }
-  //     }
-  //   }
-  // );
-
-  // db.query(
-  //   "INSERT INTO Book (Title, PublisherID, ISBN, PublicationDate, Edition, CategoryID, AvailableCopies, CoverImage) VALUES (?,?,?,?,?,?,?,?)",
-  //   [title, pId, isbn, publicationDate, edition, categoryId, copies, cover],
-  //   (err, result) => {
-  //     if (err) {
-  //       console.log(err);
-  //     } else {
-  //       res.send(result);
-  //       console.log(result);
-  //     }
-  //   }
-  // );
 });
 
 router.delete("/deleteBook/:id", (req, res) => {
   const id = req.params.id;
+  console.log(id);
   db.query(
     "SELECT CoverImage FROM Book WHERE BookID = ?",
     id,
