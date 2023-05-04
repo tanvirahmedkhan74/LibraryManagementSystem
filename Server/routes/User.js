@@ -27,7 +27,7 @@ const db = mysql.createConnection({
   user: "root",
   host: "localhost",
   password: "2600",
-  database: "elibrary",
+  database: "elms",
 });
 
 // CORS config
@@ -75,40 +75,19 @@ router.put("/updateUser/:id", (req, res) => {
   const email = req.body.email;
   const phone = req.body.phone;
   const address = req.body.address;
-  const password = req.body.password;
 
-  if (password) {
-    bcrypt.hash(password, saltRounds, (err, hash) => {
+  db.query(
+    "UPDATE user SET FirstName = ?, LastName = ?, Email = ?, PhoneNumber = ?, Address = ? WHERE UserID= ?",
+    [fname, lname, email, phone, address, id],
+    (err, result) => {
       if (err) {
         console.log(err);
+      } else {
+        res.send(result);
+        console.log("User updated");
       }
-      db.query(
-        "UPDATE users SET FirstName = ?, LastName = ?, Email = ?, Phone = ?, Address = ?, Password = ? WHERE id = ?",
-        [fname, lname, email, phone, address, hash, id],
-        (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            res.send(result);
-            console.log("User updated");
-          }
-        }
-      );
-    });
-  } else {
-    db.query(
-      "UPDATE users SET FirstName = ?, LastName = ?, Email = ?, Phone = ?, Address = ? WHERE id = ?",
-      [fname, lname, email, phone, address, id],
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-          console.log("User updated");
-        }
-      }
-    );
-  }
+    }
+  );
 });
 
 module.exports = router;

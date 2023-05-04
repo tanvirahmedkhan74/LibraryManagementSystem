@@ -30,6 +30,7 @@ export default function Login(props) {
     }).then((response) => {
       //console.log(response);
       if(!response.data.auth){
+        //alert("Wrong email or password");
         setLoginStatus(false);
       }else{
         setLoginStatus(true);

@@ -10,7 +10,7 @@ const db = mysql.createConnection({
   user: "root",
   host: "localhost",
   password: "2600",
-  database: "elibrary",
+  database: "elms",
 });
 
 const bodyParser = require("body-parser");
@@ -72,7 +72,7 @@ router.post("/login", (req, res) => {
       if (result.length > 0) {
         bcrypt.compare(
           req.body.password,
-          result[0].Password,
+          result[0].password,
           (error, response) => {
             if (response) {
               const id = result[0].UserID;
@@ -83,6 +83,7 @@ router.post("/login", (req, res) => {
               res.json({ auth: true, token: token, result: result });
             } else {
               res.json({auth: false,  message: "Wrong username/password combination" });
+              console.log(error);
             }
           }
         );
