@@ -6,7 +6,7 @@ import ELibrary from "./Components/Book/ELibrary";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Auth from "./Components/Auth";
 import { useState, useEffect } from "react";
-import Profile from "./Components/Profile";
+import Profile from "./Components/User/Profile"
 import Login from "./Components/Login";
 import ManageBook from "./Components/Admin/ManageBook";
 import EditBook from "./Components/Admin/EditBook";
@@ -46,13 +46,12 @@ function App() {
             <Route exact path="/about" element={<About/>} />
             <Route exact path="/elibrary" element={<ELibrary/>} />
             <Route path="/auth" element={<Auth/>} />
-            <Route path="/profile" element={<Profile/>} />
             <Route path="/auth/login" element={<Login/>} />
             <Route path="/admin/manageBook" element={<ManageBook/>} />
 
             <Route path="/admin/editBook/:BookID" element={<EditBook/>} />
             <Route path="/admin/addBook" element={<AddBook/>} />
-            
+            <Route path="/profile" element={<Profile/>} />
           </Routes>
         </div>
       </Router>

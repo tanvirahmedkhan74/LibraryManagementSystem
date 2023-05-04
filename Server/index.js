@@ -7,9 +7,11 @@ app.use(express.json());
 
 const authRouter = require('./routes/Auth');
 const bookRouter = require('./routes/Book');
+const userRouter = require('./routes/User');
 
 app.use('/auth', authRouter);
 app.use('/book', bookRouter);
+app.use('/user', userRouter);
 
 app.use("/uploads", express.static("Assets/Images"))
 

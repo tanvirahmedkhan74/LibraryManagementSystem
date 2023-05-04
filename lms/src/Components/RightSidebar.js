@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Profile from "./Profile";
+import Profile from "./User/Profile"
 import Axios from "axios";
 
 export default function RightSidebar(props) {
