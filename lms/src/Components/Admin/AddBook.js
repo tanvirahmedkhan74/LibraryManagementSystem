@@ -52,6 +52,15 @@ export default function AddBook() {
         });
     }
   };
+
+  const [categoryList, setCategoryList] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/book/getCategory").then((res) => {
+      //console.log(res);
+      setCategoryList(res.data);
+    });
+  }, []);
   
 
   return (
@@ -156,9 +165,11 @@ export default function AddBook() {
             }}
           >
             <option>Choose...</option>
-            <option>Computer Science</option>
-            <option>Operating System</option>
-            <option>...</option>
+            {categoryList.map((category) => (
+              <option key={category.CategoryID} value={category.Name}>
+                {category.Name}
+              </option>
+            ))}
           </select>
         </div>
         <div className="input-group">

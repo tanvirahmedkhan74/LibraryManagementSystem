@@ -104,7 +104,7 @@ router.put("/updateBook", upload.single("image"), (req, res) => {
   const edition = req.body.edition;
   const category = req.body.category;
   const copies = req.body.copies;
-  const cover = req.file.filename; // Use req.file instead of req.body.cover
+  const cover =  req.file ? req.file.filename : null; // Use req.file instead of req.body.cover
   const BookID = req.body.BookID;
 
   let pId = 0;
@@ -418,5 +418,18 @@ router.delete("/deleteBook/:id", (req, res) => {
     }
   });
 });
+
+// get all category from the db and send the Name and CategoryID
+router.get("/getCategory", (req, res) => {
+  db.query("SELECT Name, CategoryID FROM Category", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+      //console.log(result);
+    }
+  });
+});
+
 
 module.exports = router;

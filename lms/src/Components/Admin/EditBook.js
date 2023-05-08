@@ -39,6 +39,17 @@ export default function EditBook() {
     });
   }, []);
 
+  // axios call to get all the category Names from "/getCategory"
+
+  const [categoryList, setCategoryList] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/book/getCategory").then((res) => {
+      //console.log(res);
+      setCategoryList(res.data);
+    });
+  }, []);
+
   //console.log(book);
 
   const handleCover = (event) => {
@@ -60,13 +71,13 @@ export default function EditBook() {
       formData.append("isbn", isbn);
       formData.append("publicationDate", publicationDate);
       formData.append("edition", edition);
-      formData.append("category", category);
+      formData.append("category", category)
       formData.append("copies", copies);
       formData.append("BookID", BookID);
       if (cover) {
         formData.append("image", cover);
       }
-  
+
       axios
         .put("http://localhost:3001/book/updateBook", formData, {
           headers: {
@@ -82,7 +93,6 @@ export default function EditBook() {
         });
     }
   };
-  
 
   return (
     <>
@@ -184,9 +194,11 @@ export default function EditBook() {
             }}
           >
             <option>Choose...</option>
-            <option>Computer Science</option>
-            <option>Operating System</option>
-            <option>...</option>
+            {categoryList.map((category) => (
+              <option key={category.CategoryID} value={category.Name}>
+                {category.Name}
+              </option>
+            ))}
           </select>
         </div>
         <div className="input-group">
@@ -194,7 +206,7 @@ export default function EditBook() {
             type="file"
             className="form-control"
             name="image"
-            onChange = {(event) => {
+            onChange={(event) => {
               setCover(event.target.files[0]);
             }}
             id="inputGroupFile04"
