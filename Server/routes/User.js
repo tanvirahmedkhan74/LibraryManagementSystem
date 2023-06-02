@@ -7,6 +7,10 @@ const path = require("path");
 const { pid } = require("process");
 const fs = require("fs");
 
+// Must for parsing body
+const bodyParser = require("body-parser");
+router.use(bodyParser.urlencoded({ extended: true }));
+
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -89,5 +93,106 @@ router.put("/updateUser/:id", (req, res) => {
     }
   );
 });
+
+// Check borrow eligibility by book id and user id. User can borrow max 2 books at a time and book should be available
+router.post("/checkBorrowEligibility", (req, res) => {
+  const { bookID, userID } = req.body;
+
+  db.query(
+    "SELECT AvailableCopies FROM book WHERE BookID = ?",
+    [bookID],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.send({ message: "Error" });
+      } else {
+        if (result.length === 0) {
+          res.send({ message: "Book not found" });
+        } else {
+          const availableCopies = result[0].AvailableCopies;
+          if (availableCopies > 0) {
+            db.query(
+              "SELECT COUNT(*) AS count FROM borrowing WHERE UserID = ?",
+              [userID],
+              (err, result) => {
+                if (err) {
+                  console.log(err);
+                  res.send({ message: "Error" });
+                } else {
+                  const count = result[0].count;
+                  if (count < 2) {
+                    res.send({ message: "Eligible" });
+                  } else {
+                    res.send({ message: "Not Eligible" });
+                  }
+                }
+              }
+            );
+          } else {
+            res.send({ message: "Not Eligible" });
+          }
+        }
+      }
+    }
+  );
+});
+
+// Borrow book using user id and book id, one book at a time and validate using due date
+// BorrowingID, UserID, BookID, BorrwingDate, ReturnDate, DueDate
+
+router.post("/borrowBook", (req, res) => {
+  // book id and user id
+  const bookID = req.body.bookID;
+  const userID = req.body.userID;
+
+  // get current date
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  // get due date
+  const dueDate = new Date(year, month, day + 7);
+
+  // get return date
+  const returnDate = new Date(year, month, day + 14);
+
+  // get borrowing date
+  const borrowingDate = new Date(year, month, day);
+
+  // insert into borrowing table
+  db.query(
+    "INSERT INTO borrowing (UserID, BookID, BorrowingDate, ReturnDate, DueDate) VALUES (?,?,?,?,?)",
+    [userID, bookID, borrowingDate, returnDate, dueDate],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send({ message: "Borrowed" });
+      }
+    }
+  );
+});
+
+// Get all borrowed books by user id
+router.get("/getBorrowedBooks/:id", (req, res) => {
+  const id = req.params.id;
+  db.query(
+    `SELECT * FROM borrowing WHERE UserID = ${id}`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+        console.log("Borrowed books fetched");
+      }
+    }
+  );
+});
+
+
+  
+
+
 
 module.exports = router;

@@ -2,6 +2,11 @@ import React from "react";
 import Axios from "axios";
 import BooksList from "./Book/BookList";
 
+import c0 from "../Assets/Carousel/carousel0.jpg";
+import c1 from "../Assets/Carousel/carousel1.jpg";
+import c2 from "../Assets/Carousel/carousel2.jpg";
+import c3 from "../Assets/Carousel/carousel3.jpg";
+
 export default function Home(props) {
   Axios.defaults.withCredentials = true;
   const [auth, setAuth] = React.useState(false);
@@ -12,16 +17,17 @@ export default function Home(props) {
       console.log(response);
       if (response.data.loggedIn === true) {
         setAuth(true);
-        if (response.data.user[0].Admin){
+        if (response.data.user[0].Admin) {
           setAdmin(true);
         }
       }
     });
   }, []);
+  
   return (
     <>
-    <hr className="border border-primary border-3 opacity-75"/>
-      <div className="card text-center" style={{backgroundColor: "#efebe9"}}>
+      <hr className="border border-primary border-3 opacity-75" />
+      <div className="card text-center" style={{ backgroundColor: "#efebe9" }}>
         <div className="card-header">Welcome</div>
         <div className="card-body">
           <h5 className="card-title">
@@ -40,7 +46,25 @@ export default function Home(props) {
         </div>
       </div>
       <hr className="border border-primary border-3 opacity-75"></hr>
-      <BooksList/>
+      {/* <BooksList/> */}
+
+      <div
+        id="carouselExampleSlidesOnly"
+        className="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div className="carousel-inner">
+          <div className="carousel-item active">
+            <img src={c0} className="d-block w-100" alt="..." />
+          </div>
+          <div className="carousel-item">
+            <img src={c1} className="d-block w-100" alt="..." />
+          </div>
+          <div className="carousel-item">
+            <img src={c2} className="d-block w-100" alt="..." />
+          </div>
+        </div>
+      </div>
     </>
   );
 }

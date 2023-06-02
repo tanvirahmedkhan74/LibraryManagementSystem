@@ -88,7 +88,7 @@ export default function RightSidebar(props) {
                 <Link
                   className="nav-link active"
                   aria-current="page"
-                  to="/auth"
+                  to="/myBooks"
                 >
                   <button
                     className="btn btn-outline-success my-2"

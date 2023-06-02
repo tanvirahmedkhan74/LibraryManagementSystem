@@ -11,6 +11,9 @@ import Login from "./Components/Login";
 import ManageBook from "./Components/Admin/ManageBook";
 import EditBook from "./Components/Admin/EditBook";
 import AddBook from "./Components/Admin/AddBook";
+import Explore from "./Components/User/Explore";
+import MyBooks from "./Components/User/MyBooks";
+import Search from "./Components/Book/Search";
 import Axios from "axios";
 
 function App() {
@@ -52,6 +55,9 @@ function App() {
             <Route path="/admin/editBook/:BookID" element={<EditBook/>} />
             <Route path="/admin/addBook" element={<AddBook/>} />
             <Route path="/profile" element={<Profile/>} />
+            <Route path="/explore" element={<Explore/>}/>
+            <Route path="/myBooks" element={<MyBooks/>}/>
+            <Route path="/searchBook/:searchString" element={<Search/>} />
           </Routes>
         </div>
       </Router>

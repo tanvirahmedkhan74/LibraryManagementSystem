@@ -4,25 +4,39 @@ import RightSidebar from "./RightSidebar";
 import LeftSideBar from "./LeftSideBar";
 import AdminRightSideBar from "./AdminRightSideBar";
 import Axios from "axios";
+import Search from "./Book/Search";
 
 export default function Navbar(props) {
   const [admin, setAdmin] = React.useState(false);
   const [user, setUser] = React.useState(false);
+  const [search, setSearch] = React.useState("");
 
   Axios.defaults.withCredentials = true;
-  
+
   React.useEffect(() => {
     Axios.get("http://localhost:3001/auth/login").then((response) => {
       //console.log(response);
       if (response.data.loggedIn === true) {
-        if (response.data.user[0].Admin){
+        if (response.data.user[0].Admin) {
           setAdmin(true);
-        }else{
+        } else {
           setUser(true);
         }
       }
     });
   }, []);
+
+  // Handle Search at "/searchBook/:searchString" with Get Request
+  const handleSearch = () => {
+    console.log(search);
+    Axios.get(`http://localhost:3001/book/searchBook/${search}`).then(
+      (response) => {
+        console.log(response);
+        //<Route path="/searchBook/:searchString" element={<Search/>} />
+        <Search books={response.data} />;
+      }
+    );
+  };
 
   return (
     <>
@@ -86,17 +100,24 @@ export default function Navbar(props) {
                 </ul>
               </li>
             </ul>
-            <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success mx-4" type="submit">
+            <input
+              className="form-control me-2"
+              type="text"
+              placeholder="Search"
+              aria-label="Search"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              style={{ maxWidth: "200px" }}
+            />
+            <Link className="nav-link active" aria-current="page" to={`/searchBook/${search}`}>
+              <button
+                className="btn btn-outline-success mx-4"
+                type="button"
+              >
                 Search
               </button>
-            </form>
+            </Link>
+
             <button
               className="btn btn-outline-success"
               type="button"
@@ -110,7 +131,7 @@ export default function Navbar(props) {
         </div>
       </nav>
 
-      {admin ? <AdminRightSideBar/> : <RightSidebar/>}
+      {admin ? <AdminRightSideBar /> : <RightSidebar />}
       <LeftSideBar />
     </>
   );

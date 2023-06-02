@@ -25,9 +25,9 @@ export default function LeftSideBar () {
             ></button>
           </div>
           <div className="offcanvas-body">
-          <Link className="nav-link active" aria-current="page" to="/auth">
+          <Link className="nav-link active" aria-current="page" to="/explore">
               <button className="btn btn-outline-success my-2" type="button">
-                Dashboard
+                Explore
               </button>
             </Link>
 

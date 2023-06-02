@@ -104,7 +104,7 @@ router.put("/updateBook", upload.single("image"), (req, res) => {
   const edition = req.body.edition;
   const category = req.body.category;
   const copies = req.body.copies;
-  const cover =  req.file ? req.file.filename : null; // Use req.file instead of req.body.cover
+  const cover = req.file ? req.file.filename : null; // Use req.file instead of req.body.cover
   const BookID = req.body.BookID;
 
   let pId = 0;
@@ -264,7 +264,6 @@ router.get("/getBook/:id", (req, res) => {
     }
   });
 });
-
 
 // Title, ISBN, Publisher, NumberOfPages, Edition, AvailableCopy, Cover(optional)
 router.post("/addBook", upload.single("image"), (req, res) => {
@@ -431,5 +430,68 @@ router.get("/getCategory", (req, res) => {
   });
 });
 
+// Search a book based on search string
+router.get("/searchBook/:searchString", (req, res) => {
+  const searchString = req.params.searchString;
+
+  db.query(
+    "SELECT Book.* FROM Book JOIN Publisher ON Book.PublisherID = Publisher.PublisherID WHERE Book.Title LIKE ? OR Publisher.Name LIKE ?",
+    [`%${searchString}%`, `%${searchString}%`],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(result);
+        // Get the Publisher from the publisher table with the PublisherID
+
+        const publisherPromises = result.map((book) => {
+          return new Promise((resolve, reject) => {
+            db.query(
+              "SELECT Name FROM Publisher WHERE PublisherID = ?",
+              book.PublisherID,
+              (err, result2) => {
+                if (err) {
+                  reject(err);
+                } else {
+                  book.Publisher = result2[0].Name;
+                  resolve();
+                }
+              }
+            );
+          });
+        });
+
+        // Get the Category from the category table with the CategoryID
+
+        const categoryPromises = result.map((book) => {
+          return new Promise((resolve, reject) => {
+            db.query(
+              "SELECT Name FROM Category WHERE CategoryID = ?",
+              book.CategoryID,
+              (err, result2) => {
+                if (err) {
+                  reject(err);
+                } else {
+                  book.Category = result2[0].Name;
+                  resolve();
+                }
+              }
+            );
+          });
+        });
+
+        Promise.all([...publisherPromises, ...categoryPromises])
+          .then(() => {
+            //console.log(result);
+            res.send(result);
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(500).send("Internal server error");
+          });
+      }
+    }
+  );
+});
 
 module.exports = router;
