@@ -67,9 +67,11 @@ export default function Login(props) {
 
   return (
     <div className="container my-5">
-      <h3>{loginStatus ? "IN" : "Nope"}</h3>
-      <h2>Login</h2>
-      
+      <h3 style={{ color: "#ff0000", fontFamily: "Fantasy", fontSize: "24px" }}>
+        {loginStatus ? "Welcome" : "Not Logged In"}
+      </h3>
+      <h2 style={{ fontFamily: "Fantasy", fontSize: "32px" }}>Login</h2>
+  
       <form>
         <div className="form-floating mb-3">
           <input
@@ -80,7 +82,9 @@ export default function Login(props) {
             value={logEmail}
             onChange={handleLogEmailChange}
           />
-          <label htmlFor="floatingInput">Email address</label>
+          <label htmlFor="floatingInput" style={{ fontFamily: "Fantasy" }}>
+            Email address
+          </label>
         </div>
         <div className="form-floating">
           <input
@@ -91,14 +95,21 @@ export default function Login(props) {
             value={logPassword}
             onChange={handleLogPasswordChange}
           />
-          <label htmlFor="floatingPassword">Password</label>
+          <label htmlFor="floatingPassword" style={{ fontFamily: "Fantasy" }}>
+            Password
+          </label>
         </div>
         <br />
-        <button type="submit" className="btn btn-primary" onClick={login}>
+        <button
+          type="submit"
+          className="btn btn-primary"
+          onClick={login}
+          style={{ fontFamily: "Fantasy", fontSize: "18px" }}
+        >
           Login
         </button>
       </form>
-      
     </div>
   );
+  
 }

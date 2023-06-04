@@ -23,30 +23,51 @@ export default function Home(props) {
       }
     });
   }, []);
-  
+
   return (
     <>
       <hr className="border border-primary border-3 opacity-75" />
-      <div className="card text-center" style={{ backgroundColor: "#dbd9fe" }}>
+      <div
+        className="card text-center"
+        style={{ backgroundColor: "#dbd9fe", padding: "20px" }}
+      >
         <div className="card-header">Welcome</div>
         <div className="card-body">
-          <h5 className="card-title">
-            Welcome to Library Management System App
+          <h5
+            className="card-title"
+            style={{
+              fontFamily: "Fantasy",
+              fontSize: "32px",
+              fontWeight: "bold",
+              color: "#333",
+            }}
+          >
+            Welcome to the Library Management System App
           </h5>
-          <p className="card-text">
-            With supporting text below as a natural lead-in to additional
-            content.
+          <p
+            className="card-text"
+            style={{ fontFamily: "Arial, sans-serif", fontSize: "18px" }}
+          >
+            "The only thing that you absolutely have to know is the location of
+            the library."
+            <br />- Albert Einstein
           </p>
-          <a href="/" className="btn btn-primary">
+          <a
+            href="/"
+            className="btn btn-primary"
+            style={{ fontFamily: "Arial, sans-serif", fontSize: "20px" }}
+          >
             Let's get Started!
           </a>
         </div>
-        <div className="card-footer text-muted">
+        <div
+          className="card-footer text-muted"
+          style={{ fontFamily: "Arial, sans-serif", fontSize: "16px" }}
+        >
           {/* {props.auth === true ? "" : "Please Log in to your Account!"} */}
         </div>
       </div>
-      <hr className="border border-primary border-3 opacity-75"></hr>
-      {/* <BooksList/> */}
+      <hr className="border border-primary border-3 opacity-75" />
 
       <div
         id="carouselExampleSlidesOnly"

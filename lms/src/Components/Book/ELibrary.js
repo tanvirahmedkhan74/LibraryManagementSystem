@@ -16,7 +16,7 @@ export default function ELibrary(props) {
       console.log(response);
       if (response.data.loggedIn === true) {
         setAuth(true);
-        if (response.data.user[0].Admin){
+        if (response.data.user[0].Admin) {
           setAdmin(true);
         }
       }
@@ -24,7 +24,7 @@ export default function ELibrary(props) {
   }, []);
   return (
     <>
-      {(auth || admin) ? (
+      {auth || admin ? (
         <>
           <div style={{ display: "flex", justifyContent: "space-around" }}>
             <div className="card" style={{ width: "18rem" }}>
@@ -179,7 +179,9 @@ export default function ELibrary(props) {
           </div>
         </>
       ) : (
-        <div className="container">Please Login First!</div>
+        <p className="text-center" style={{ fontSize: "20px" }}>
+          Please login to explore the books
+        </p>
       )}
     </>
   );

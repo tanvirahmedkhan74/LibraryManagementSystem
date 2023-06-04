@@ -31,9 +31,9 @@ export default function Registration() {
 
   return (
     <div className="container my-5">
-      <h2>Registration</h2>
+      <h2 style={{ fontFamily: "Fantasy", fontSize: "32px" }}>Registration</h2>
       <form>
-      <div className="form-floating mb-3">
+        <div className="form-floating mb-3">
           <input
             type="text"
             className="form-control"
@@ -42,7 +42,9 @@ export default function Registration() {
             value={name}
             onChange={handleNameChange}
           />
-          <label htmlFor="floatingInput">Name</label>
+          <label htmlFor="floatingInput" style={{ fontFamily: "Fantasy" }}>
+            Name
+          </label>
         </div>
         <div className="form-floating mb-3">
           <input
@@ -53,7 +55,9 @@ export default function Registration() {
             value={regEmail}
             onChange={handleRegEmailChange}
           />
-          <label htmlFor="floatingInput">Email address</label>
+          <label htmlFor="floatingInput" style={{ fontFamily: "Fantasy" }}>
+            Email address
+          </label>
         </div>
         <div className="form-floating">
           <input
@@ -64,13 +68,21 @@ export default function Registration() {
             value={regPassword}
             onChange={handleRegPasswordChange}
           />
-          <label htmlFor="floatingPassword">Password</label>
+          <label htmlFor="floatingPassword" style={{ fontFamily: "Fantasy" }}>
+            Password
+          </label>
         </div>
         <br />
-        <button type="submit" className="btn btn-primary mx-3" onClick={register}>
+        <button
+          type="submit"
+          className="btn btn-primary mx-3"
+          onClick={register}
+          style={{ fontFamily: "Fantasy", fontSize: "18px" }}
+        >
           Create new Account
         </button>
       </form>
     </div>
   );
+  
 }

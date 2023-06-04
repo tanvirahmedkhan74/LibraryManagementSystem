@@ -1,7 +1,7 @@
 import React from "react";
 import Axios from "axios";
-import axios from 'axios';
-import Book from "../Book/Book"
+import axios from "axios";
+import Book from "../Book/Book";
 import { useState, useEffect } from "react";
 
 export default function Explore() {
@@ -26,26 +26,30 @@ export default function Explore() {
   }, []);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/book/getBooks')
-      .then(response => {
+    axios
+      .get("http://localhost:3001/book/getBooks")
+      .then((response) => {
         //console.log(response.data);
         setBooks(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }, []);
 
   return (
     <>
-    {auth ? (
+      {auth ? (
         <div className="row">
-        {books.map((book) => (
-          <Book book={book} userID={userID} key={book.BookID}/>
-        ))}
-      </div>
-    ) : (<p>Please login to explore the books</p>)}
+          {books.map((book) => (
+            <Book book={book} userID={userID} key={book.BookID} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center" style={{ fontSize: "20px" }}>
+          Please login to explore the books
+        </p>
+      )}
     </>
-    
   );
 }

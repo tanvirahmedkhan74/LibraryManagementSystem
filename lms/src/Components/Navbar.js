@@ -43,7 +43,7 @@ export default function Navbar(props) {
       <nav className="navbar navbar-expand-lg sticky-top bg-body-tertiary">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
-            LMS
+            <span style={{ fontFamily: "Fantasy", fontSize: "24px" }}>LMS</span>
           </Link>
           <button
             className="btn btn-white"
@@ -68,37 +68,6 @@ export default function Navbar(props) {
                   eLibrary
                 </Link>
               </li>
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="/"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Category
-                </a>
-                <ul className="dropdown-menu">
-                  <li>
-                    <a className="dropdown-item" href="/">
-                      Action
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="/">
-                      Another action
-                    </a>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="/">
-                      Something else here
-                    </a>
-                  </li>
-                </ul>
-              </li>
             </ul>
             <input
               className="form-control me-2"
@@ -107,12 +76,32 @@ export default function Navbar(props) {
               aria-label="Search"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              style={{ maxWidth: "200px" }}
+              style={{
+                maxWidth: "200px",
+                fontFamily: "Fantasy",
+                borderRadius: "5px",
+                backgroundColor: "#f8f9fa",
+                color: "#333",
+              }}
             />
-            <Link className="nav-link active" aria-current="page" to={`/searchBook/${search}`}>
+            <Link
+              className="nav-link active"
+              aria-current="page"
+              to={`/searchBook/${search}`}
+            >
               <button
                 className="btn btn-outline-success mx-4"
                 type="button"
+                style={{
+                  fontFamily: "Fantasy",
+                  backgroundColor: "#ffc107",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "5px",
+                  padding: "10px 20px",
+                  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)",
+                  fontWeight: "bold",
+                }}
               >
                 Search
               </button>
@@ -124,6 +113,16 @@ export default function Navbar(props) {
               data-bs-toggle="offcanvas"
               data-bs-target="#offcanvasRight"
               aria-controls="offcanvasRight"
+              style={{
+                fontFamily: "Fantasy",
+                backgroundColor: "#6c757d",
+                color: "#fff",
+                border: "none",
+                borderRadius: "5px",
+                padding: "10px 20px",
+                boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.25)",
+                fontWeight: "bold",
+              }}
             >
               Account
             </button>
