@@ -27,7 +27,7 @@ export default function Home(props) {
   return (
     <>
       <hr className="border border-primary border-3 opacity-75" />
-      <div className="card text-center" style={{ backgroundColor: "#efebe9" }}>
+      <div className="card text-center" style={{ backgroundColor: "#dbd9fe" }}>
         <div className="card-header">Welcome</div>
         <div className="card-body">
           <h5 className="card-title">

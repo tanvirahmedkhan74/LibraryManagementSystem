@@ -96,30 +96,33 @@ router.put("/updateUser/:id", (req, res) => {
 
 // Check borrow eligibility by book id and user id. User can borrow max 2 books at a time and book should be available
 router.post("/checkBorrowEligibility", (req, res) => {
-  const { bookID, userID } = req.body;
+  const bookID = req.body.bookID;
+  console.log(req.body);
+  const userID = req.body.userID;
 
   db.query(
     "SELECT AvailableCopies FROM book WHERE BookID = ?",
     [bookID],
-    (err, result) => {
+    (err, bookResult) => {
       if (err) {
         console.log(err);
         res.send({ message: "Error" });
       } else {
-        if (result.length === 0) {
+        if (bookResult.length === 0) {
           res.send({ message: "Book not found" });
         } else {
-          const availableCopies = result[0].AvailableCopies;
+          const availableCopies = bookResult[0].AvailableCopies;
           if (availableCopies > 0) {
             db.query(
               "SELECT COUNT(*) AS count FROM borrowing WHERE UserID = ?",
               [userID],
-              (err, result) => {
+              (err, borrowingResult) => {
                 if (err) {
                   console.log(err);
                   res.send({ message: "Error" });
                 } else {
-                  const count = result[0].count;
+                  const count = borrowingResult[0].count;
+                  console.log(count);
                   if (count < 2) {
                     res.send({ message: "Eligible" });
                   } else {
@@ -137,11 +140,13 @@ router.post("/checkBorrowEligibility", (req, res) => {
   );
 });
 
+
 // Borrow book using user id and book id, one book at a time and validate using due date
 // BorrowingID, UserID, BookID, BorrwingDate, ReturnDate, DueDate
 
 router.post("/borrowBook", (req, res) => {
   // book id and user id
+  //console.log(req.body);
   const bookID = req.body.bookID;
   const userID = req.body.userID;
 
@@ -169,6 +174,19 @@ router.post("/borrowBook", (req, res) => {
         console.log(err);
       } else {
         res.send({ message: "Borrowed" });
+      }
+    }
+  );
+
+  // update available copies
+  db.query(
+    "UPDATE book SET AvailableCopies = AvailableCopies - 1 WHERE BookID = ?",
+    [bookID],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Available copies updated");
       }
     }
   );

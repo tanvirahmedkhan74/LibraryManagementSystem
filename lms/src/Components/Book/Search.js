@@ -21,7 +21,9 @@ export default function Search() {
 
   return (
     <>
-      <div className="container">
+      <div
+        className="container"
+      >
         <h2>Search Results</h2>
         {books.length > 0 ? (
           <>
@@ -29,7 +31,7 @@ export default function Search() {
             <div className="row">
               {books.map((book) => (
                 <div className="col-sm-4" key={book.id}>
-                  <div className="card">
+                  <div className="card" >
                     <img
                       src={`http://localhost:3001/uploads/${book.CoverImage}`}
                       className="card-img-top"
@@ -39,7 +41,7 @@ export default function Search() {
                       <h5 className="card-title">{book.Title}</h5>
                       <p className="card-text">{book.Description}</p>
                       <a href="/" className="btn btn-primary">
-                        Go somewhere
+                        Borrow
                       </a>
                     </div>
                   </div>

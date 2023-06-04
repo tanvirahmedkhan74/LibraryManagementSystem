@@ -218,6 +218,7 @@ router.put("/updateBook", upload.single("image"), (req, res) => {
 
 router.get("/getBook/:id", (req, res) => {
   const id = req.params.id;
+  //console.log(id);
   db.query("SELECT * FROM Book WHERE BookID = ?", id, (err, result) => {
     if (err) {
       console.log(err);
@@ -493,5 +494,19 @@ router.get("/searchBook/:searchString", (req, res) => {
     }
   );
 });
+
+router.get("/getTrending", (req, res) => {
+  const query = "SELECT Title, PublisherID, ISBN, PublicationDate, Edition, CategoryID, AvailableCopies, CoverImage FROM Book ORDER BY RAND() LIMIT 10";
+
+  db.query(query, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.send({ message: "Error" });
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 
 module.exports = router;

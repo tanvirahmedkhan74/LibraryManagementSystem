@@ -31,7 +31,7 @@ export default function LeftSideBar () {
               </button>
             </Link>
 
-            <Link className="nav-link active" aria-current="page" to="/auth">
+            <Link className="nav-link active" aria-current="page" to="/trending">
               <button className="btn btn-outline-success my-2" type="button">
                 Trending
               </button>

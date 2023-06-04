@@ -14,6 +14,8 @@ import AddBook from "./Components/Admin/AddBook";
 import Explore from "./Components/User/Explore";
 import MyBooks from "./Components/User/MyBooks";
 import Search from "./Components/Book/Search";
+import Borrow from "./Components/Book/Borrow";
+import Trending from "./Components/Book/Trending";
 import Axios from "axios";
 
 function App() {
@@ -58,6 +60,8 @@ function App() {
             <Route path="/explore" element={<Explore/>}/>
             <Route path="/myBooks" element={<MyBooks/>}/>
             <Route path="/searchBook/:searchString" element={<Search/>} />
+            <Route path="/borrow/:id" element={<Borrow/>}/>
+            <Route path="/trending" element={<Trending/>}/>
           </Routes>
         </div>
       </Router>
