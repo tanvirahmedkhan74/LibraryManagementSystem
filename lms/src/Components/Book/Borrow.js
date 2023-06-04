@@ -17,7 +17,7 @@ export default function Borrow() {
   const [title, setTitle] = useState("");
 
   React.useEffect(() => {
-    console.log("Book id found " + bookID);
+    //console.log("Book id found " + bookID);
     Axios.get(`http://localhost:3001/book/getBook/${bookID}`)
       .then((response) => {
         console.log(response);

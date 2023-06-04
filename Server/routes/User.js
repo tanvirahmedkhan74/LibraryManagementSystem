@@ -48,7 +48,7 @@ router.use(
 
 // Get all users
 router.get("/getUsers", (req, res) => {
-  db.query("SELECT * FROM users", (err, result) => {
+  db.query("SELECT * FROM user", (err, result) => {
     if (err) {
       console.log(err);
     } else {

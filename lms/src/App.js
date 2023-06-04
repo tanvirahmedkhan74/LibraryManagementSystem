@@ -16,6 +16,7 @@ import MyBooks from "./Components/User/MyBooks";
 import Search from "./Components/Book/Search";
 import Borrow from "./Components/Book/Borrow";
 import Trending from "./Components/Book/Trending";
+import ManageUsers from "./Components/Admin/ManageUser";
 import Axios from "axios";
 
 function App() {
@@ -62,6 +63,7 @@ function App() {
             <Route path="/searchBook/:searchString" element={<Search/>} />
             <Route path="/borrow/:id" element={<Borrow/>}/>
             <Route path="/trending" element={<Trending/>}/>
+            <Route path="/admin/manageUser" element={<ManageUsers/>}/>
           </Routes>
         </div>
       </Router>

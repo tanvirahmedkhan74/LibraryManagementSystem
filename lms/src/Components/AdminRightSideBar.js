@@ -29,9 +29,10 @@ export default function AdminRightSideBar() {
           }}
         >
           <div className="offcanvas-header">
-            <h5 className="offcanvas-title" id="offcanvasRightLabel">
-              Admin - Manage Account {/* Add "Admin" */}
-            </h5>
+          <h5 className="offcanvas-title" id="offcanvasRightLabel" style={{ color: "#333", backgroundColor: "#dbd9fe" }}>
+  Admin - Manage Account {/* Add "Admin" */}
+</h5>
+
             <button
               type="button"
               className="btn-close"
@@ -49,7 +50,7 @@ export default function AdminRightSideBar() {
                 Manage Books
               </button>
             </Link>
-            <Link className="nav-link active" aria-current="page" to="/auth">
+            <Link className="nav-link active" aria-current="page" to="/admin/manageUser">
               <button className="btn btn-outline-success my-2" type="button">
                 Manage Users
               </button>

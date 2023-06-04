@@ -26,66 +26,54 @@ export default function Home(props) {
 
   return (
     <>
-      <hr className="border border-primary border-3 opacity-75" />
-      <div
-        className="card text-center"
-        style={{ backgroundColor: "#dbd9fe", padding: "20px" }}
-      >
-        <div className="card-header">Welcome</div>
-        <div className="card-body">
-          <h5
-            className="card-title"
-            style={{
-              fontFamily: "Fantasy",
-              fontSize: "32px",
-              fontWeight: "bold",
-              color: "#333",
-            }}
-          >
-            Welcome to the Library Management System App
-          </h5>
-          <p
-            className="card-text"
-            style={{ fontFamily: "Arial, sans-serif", fontSize: "18px" }}
-          >
-            "The only thing that you absolutely have to know is the location of
-            the library."
-            <br />- Albert Einstein
-          </p>
-          <a
-            href="/"
-            className="btn btn-primary"
-            style={{ fontFamily: "Arial, sans-serif", fontSize: "20px" }}
-          >
-            Let's get Started!
-          </a>
+    <hr className="border border-primary border-1 opacity-75" />
+    <div className="card text-center" style={{ backgroundColor: "#dbd9fe", padding: "20px" }}>
+      <div className="card-header">Welcome</div>
+      <div className="card-body">
+        <h5 className="card-title" style={{ fontFamily: "Fantasy", fontSize: "32px", fontWeight: "bold", color: "#333" }}>
+          Welcome to the Library Management System App
+        </h5>
+        <p className="card-text" style={{ fontFamily: "Arial, sans-serif", fontSize: "18px" }}>
+          "The only thing that you absolutely have to know is the location of the library."
+          <br />- Albert Einstein
+        </p>
+        <a href="/" className="btn btn-primary" style={{ fontFamily: "Arial, sans-serif", fontSize: "20px" }}>
+          Let's get Started!
+        </a>
+      </div>
+      <div className="card-footer text-muted" style={{ fontFamily: "Arial, sans-serif", fontSize: "16px" }}>
+        {/* {props.auth === true ? "" : "Please Log in to your Account!"} */}
+      </div>
+    </div>
+    <hr className="border border-primary border-1 opacity-75" />
+  
+    <div id="carouselExampleSlidesOnly" className="carousel slide text-center" data-bs-ride="carousel">
+      <div className="carousel-inner">
+        <div className="carousel-item active">
+          <img src={c0} className="d-block mx-auto" alt="..." style={{ maxWidth: "600px" }} />
         </div>
-        <div
-          className="card-footer text-muted"
-          style={{ fontFamily: "Arial, sans-serif", fontSize: "16px" }}
-        >
-          {/* {props.auth === true ? "" : "Please Log in to your Account!"} */}
+        <div className="carousel-item">
+          <img src={c1} className="d-block mx-auto" alt="..." style={{ maxWidth: "600px" }} />
+        </div>
+        <div className="carousel-item">
+          <img src={c2} className="d-block mx-auto" alt="..." style={{ maxWidth: "600px" }} />
         </div>
       </div>
-      <hr className="border border-primary border-3 opacity-75" />
-
-      <div
-        id="carouselExampleSlidesOnly"
-        className="carousel slide"
-        data-bs-ride="carousel"
-      >
-        <div className="carousel-inner">
-          <div className="carousel-item active">
-            <img src={c0} className="d-block w-100" alt="..." />
-          </div>
-          <div className="carousel-item">
-            <img src={c1} className="d-block w-100" alt="..." />
-          </div>
-          <div className="carousel-item">
-            <img src={c2} className="d-block w-100" alt="..." />
-          </div>
-        </div>
-      </div>
-    </>
+    </div>
+  
+    <style>{`
+      .card {
+        margin: 20px auto;
+        max-width: 600px;
+        border: 2px solid #333;
+      }
+  
+      .carousel {
+        margin: 40px auto;
+        max-width: 600px;
+      }
+    `}</style>
+  </>
+  
   );
 }
